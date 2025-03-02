@@ -116,4 +116,61 @@ void main() {
     // Verify that GridView is not shown when there's an error
     expect(find.byType(GridView), findsNothing);
   });
+
+  testWidgets('should show vehicle entry dialog when tapping empty spot',
+      (WidgetTester tester) async {
+    // Build our app and trigger a frame
+    await tester.pumpWidget(buildTestWidget());
+
+    // Find and tap the first empty spot (Vaga 1)
+    await tester.tap(find.text('Vaga 1'));
+    await tester.pumpAndSettle();
+
+    // Verify that the vehicle entry dialog is shown
+    expect(find.text('Registrar Entrada'), findsOneWidget);
+  });
+
+  testWidgets('should show vehicle exit dialog when tapping occupied spot',
+      (WidgetTester tester) async {
+    // Build our app and trigger a frame
+    await tester.pumpWidget(buildTestWidget());
+
+    // Find and tap the occupied spot (Vaga 2 with plate ABC1234)
+    await tester.tap(find.text('ABC1234'));
+    await tester.pumpAndSettle();
+
+    // Verify that the vehicle exit dialog is shown
+    expect(find.text('Registrar Saída'), findsOneWidget);
+  });
+
+  testWidgets('should show vehicle history dialog when tapping history button',
+      (WidgetTester tester) async {
+    // Build our app and trigger a frame
+    await tester.pumpWidget(buildTestWidget());
+
+    // Find and tap the history button
+    await tester.tap(find.text('Histórico'));
+    await tester.pumpAndSettle();
+
+    // Verify that the vehicle history dialog is shown
+    expect(find.text('Histórico de Veículos'), findsOneWidget);
+  });
+
+  testWidgets('should show clear records dialog when tapping end day button',
+      (WidgetTester tester) async {
+    // Build our app and trigger a frame
+    await tester.pumpWidget(buildTestWidget());
+
+    // Find and tap the end day button
+    await tester.tap(find.text('Finalizar Dia').first);
+    await tester.pumpAndSettle();
+
+    // Verify that the clear records dialog is shown with its content
+    expect(
+      find.text(
+        'Isso irá remover todos os registros de veículos e liberar todas as vagas. Esta ação não pode ser desfeita. Deseja continuar?',
+      ),
+      findsOneWidget,
+    );
+  });
 }

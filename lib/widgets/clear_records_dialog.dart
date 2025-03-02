@@ -31,7 +31,7 @@ class ClearRecordsDialog extends StatelessWidget {
             if (context.mounted) {
               if (success) {
                 Navigator.pop(context);
-                showDialog(
+                showAdaptiveDialog(
                   context: context,
                   builder:
                       (context) => AlertDialog(

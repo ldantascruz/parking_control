@@ -80,7 +80,7 @@ void main() {
             builder:
                 (context) => ElevatedButton(
                   onPressed: () {
-                    showDialog(
+                    showAdaptiveDialog(
                       context: context,
                       builder:
                           (_) => ChangeNotifierProvider<ParkingViewModel>.value(
@@ -139,7 +139,7 @@ void main() {
             builder:
                 (context) => ElevatedButton(
                   onPressed: () {
-                    showDialog(
+                    showAdaptiveDialog(
                       context: context,
                       builder:
                           (_) => ChangeNotifierProvider<ParkingViewModel>.value(

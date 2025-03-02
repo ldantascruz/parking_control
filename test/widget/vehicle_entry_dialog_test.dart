@@ -28,10 +28,12 @@ void main() {
 
   Widget buildTestWidget() {
     return MaterialApp(
-      home: Scaffold(
-        body: ChangeNotifierProvider<ParkingViewModel>.value(
-          value: mockViewModel,
-          child: VehicleEntryDialog(preSelectedSpot: testSpot.number),
+      home: ChangeNotifierProvider<ParkingViewModel>.value(
+        value: mockViewModel,
+        child: Builder(
+          builder: (context) => Dialog(
+            child: VehicleEntryDialog(preSelectedSpot: testSpot.number),
+          ),
         ),
       ),
     );

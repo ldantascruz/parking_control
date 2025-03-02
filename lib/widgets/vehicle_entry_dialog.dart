@@ -91,18 +91,27 @@ class _VehicleEntryDialogState extends State<VehicleEntryDialog> {
                           icon: Icons.credit_card,
                           inputFormatters: [plateFormatter],
                           textCapitalization: TextCapitalization.characters,
-                          validator:
-                              (value) =>
-                                  value?.isEmpty ?? true
-                                      ? 'Informe a placa'
-                                      : null,
+                          validator: (value) {
+                            if (value?.isEmpty ?? true) {
+                              return 'Informe a placa';
+                            }
+                            final regex = RegExp(
+                              r'^[A-Za-z]{3}-[A-Za-z0-9]{4,5}$',
+                            );
+                            if (!regex.hasMatch(value!)) {
+                              return 'Placa inválida. Formato correto: ABC-1234, ABC-1A34';
+                            }
+                            return null;
+                          },
                           onSaved: (value) => plate = value ?? '',
                         ),
+
                         SizedBox(height: 16),
                         _buildFormField(
                           label: 'Nome do Motorista',
                           hint: 'Nome do motorista',
                           icon: Icons.person,
+                          textCapitalization: TextCapitalization.characters,
                           validator:
                               (value) =>
                                   value?.isEmpty ?? true
@@ -115,6 +124,7 @@ class _VehicleEntryDialogState extends State<VehicleEntryDialog> {
                           label: 'Descrição do Veículo',
                           hint: 'Descrição (opcional)',
                           icon: Icons.description,
+                          textCapitalization: TextCapitalization.characters,
                           onSaved: (value) => description = value,
                         ),
                         SizedBox(height: 16),
@@ -143,23 +153,32 @@ class _VehicleEntryDialogState extends State<VehicleEntryDialog> {
                             ),
                             value: spotNumber,
                             items:
-                                viewModel.availableParkingSpots
-                                    .map(
-                                      (spot) => DropdownMenuItem<int>(
-                                        value: spot.number,
-                                        child: Text(
-                                          'Vaga ${spot.number}',
-                                          style: GoogleFonts.poppins(
-                                            fontWeight: FontWeight.bold,
-                                            color:
-                                                Theme.of(
-                                                  context,
-                                                ).colorScheme.primary,
+                                (() {
+                                  final availableSpots =
+                                      viewModel.availableParkingSpots
+                                          .map((spot) => spot.number)
+                                          .toSet();
+                                  if (!availableSpots.contains(spotNumber)) {
+                                    availableSpots.add(spotNumber);
+                                  }
+                                  return availableSpots
+                                      .map(
+                                        (number) => DropdownMenuItem<int>(
+                                          value: number,
+                                          child: Text(
+                                            'Vaga $number',
+                                            style: GoogleFonts.poppins(
+                                              fontWeight: FontWeight.bold,
+                                              color:
+                                                  Theme.of(
+                                                    context,
+                                                  ).colorScheme.primary,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    )
-                                    .toList(),
+                                      )
+                                      .toList();
+                                })(),
                             onChanged: (value) {
                               if (value != null) {
                                 setState(() {
@@ -246,7 +265,12 @@ class _VehicleEntryDialogState extends State<VehicleEntryDialog> {
     if (formKey.currentState?.validate() ?? false) {
       formKey.currentState?.save();
       final viewModel = context.read<ParkingViewModel>();
-      final success = await viewModel.registerVehicleEntry(plate, description, driver, spotNumber);
+      final success = await viewModel.registerVehicleEntry(
+        plate,
+        description,
+        driver,
+        spotNumber,
+      );
       if (success) {
         Navigator.pop(context);
       }

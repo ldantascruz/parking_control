@@ -123,30 +123,44 @@ class HomeScreen extends StatelessWidget {
     if (spot.isOccupied) {
       final vehicle = viewModel.getVehicleBySpotNumber(spot.number);
       if (vehicle != null) {
-        showDialog(
+        showAdaptiveDialog(
           context: context,
-          builder: (context) => VehicleExitDialog(vehicle: vehicle),
+          builder: (dialogContext) => ChangeNotifierProvider<ParkingViewModel>.value(
+            value: viewModel,
+            child: VehicleExitDialog(vehicle: vehicle),
+          ),
         );
       }
     } else {
-      showDialog(
+      showAdaptiveDialog(
         context: context,
-        builder: (context) => VehicleEntryDialog(preSelectedSpot: spot.number),
+        builder: (dialogContext) => ChangeNotifierProvider<ParkingViewModel>.value(
+          value: viewModel,
+          child: VehicleEntryDialog(preSelectedSpot: spot.number),
+        ),
       );
     }
   }
 
   void _showVehicleHistoryDialog(BuildContext context) {
-    showDialog(
+    final viewModel = Provider.of<ParkingViewModel>(context, listen: false);
+    showAdaptiveDialog(
       context: context,
-      builder: (context) => const VehicleHistoryDialog(),
+      builder: (dialogContext) => ChangeNotifierProvider<ParkingViewModel>.value(
+        value: viewModel,
+        child: const VehicleHistoryDialog(),
+      ),
     );
   }
 
   void _showClearAllRecordsDialog(BuildContext context) {
-    showDialog(
+    final viewModel = Provider.of<ParkingViewModel>(context, listen: false);
+    showAdaptiveDialog(
       context: context,
-      builder: (context) => const ClearRecordsDialog(),
+      builder: (dialogContext) => ChangeNotifierProvider<ParkingViewModel>.value(
+        value: viewModel,
+        child: const ClearRecordsDialog(),
+      ),
     );
   }
 }

@@ -92,7 +92,7 @@ void main() {
               builder:
                   (context) => ElevatedButton(
                     onPressed: () {
-                      showDialog(
+                      showAdaptiveDialog(
                         context: context,
                         builder:
                             (_) =>
@@ -144,7 +144,8 @@ void main() {
       expect(find.text('Failed to register exit'), findsOneWidget);
     },
   );
-  testWidgets('VehicleExitDialog should display vehicle description when available',
+  testWidgets(
+    'VehicleExitDialog should display vehicle description when available',
     (WidgetTester tester) async {
       testVehicle = Vehicle(
         id: 'test-id',
@@ -156,49 +157,54 @@ void main() {
 
       await tester.pumpWidget(buildTestWidget());
       expect(find.text('Descrição: Red Car'), findsOneWidget);
-    });
+    },
+  );
 
-  testWidgets('VehicleExitDialog should display driver name when available',
-    (WidgetTester tester) async {
-      testVehicle = Vehicle(
-        id: 'test-id',
-        plate: 'ABC1234',
-        entryTime: DateTime.now().subtract(const Duration(hours: 2)),
-        spotNumber: 1,
-        driver: 'John Doe',
-      );
+  testWidgets('VehicleExitDialog should display driver name when available', (
+    WidgetTester tester,
+  ) async {
+    testVehicle = Vehicle(
+      id: 'test-id',
+      plate: 'ABC1234',
+      entryTime: DateTime.now().subtract(const Duration(hours: 2)),
+      spotNumber: 1,
+      driver: 'John Doe',
+    );
 
-      await tester.pumpWidget(buildTestWidget());
-      expect(find.text('Motorista: John Doe'), findsOneWidget);
-    });
+    await tester.pumpWidget(buildTestWidget());
+    expect(find.text('Motorista: John Doe'), findsOneWidget);
+  });
 
-  testWidgets('VehicleExitDialog should close when cancel button is pressed',
-    (WidgetTester tester) async {
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Builder(
-            builder: (context) => ElevatedButton(
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (_) => ChangeNotifierProvider<ParkingViewModel>.value(
-                    value: mockViewModel,
-                    child: VehicleExitDialog(vehicle: testVehicle),
-                  ),
-                );
-              },
-              child: const Text('Show Dialog'),
-            ),
-          ),
+  testWidgets('VehicleExitDialog should close when cancel button is pressed', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Builder(
+          builder:
+              (context) => ElevatedButton(
+                onPressed: () {
+                  showAdaptiveDialog(
+                    context: context,
+                    builder:
+                        (_) => ChangeNotifierProvider<ParkingViewModel>.value(
+                          value: mockViewModel,
+                          child: VehicleExitDialog(vehicle: testVehicle),
+                        ),
+                  );
+                },
+                child: const Text('Show Dialog'),
+              ),
         ),
-      );
+      ),
+    );
 
-      await tester.tap(find.text('Show Dialog'));
-      await tester.pumpAndSettle();
+    await tester.tap(find.text('Show Dialog'));
+    await tester.pumpAndSettle();
 
-      await tester.tap(find.text('Cancelar'));
-      await tester.pumpAndSettle();
+    await tester.tap(find.text('Cancelar'));
+    await tester.pumpAndSettle();
 
-      expect(find.byType(VehicleExitDialog), findsNothing);
-    });
+    expect(find.byType(VehicleExitDialog), findsNothing);
+  });
 }
