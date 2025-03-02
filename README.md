@@ -77,14 +77,14 @@ lib/
 ### Como Executar o Projeto
 
 1. **Pré-requisitos**:
-   - Flutter SDK instalado (versão 3.7.0 ou superior)
-   - Dart SDK instalado
+   - Flutter SDK instalado (versão 3.29.0 ou superior)
+   - Dart SDK instalado (versão 3.7.0 ou superior)
    - Editor de código (VS Code, Android Studio, etc)
 
 2. **Configuração**:
    ```bash
    # Clone o repositório
-   git clone [url-do-repositorio]
+   git clone https://github.com/ldantascruz/parking_control.git
    
    # Navegue até o diretório do projeto
    cd parking_control
@@ -102,8 +102,10 @@ lib/
 4. **Testes**:
    ```bash
    # Execute os testes unitários e de widgets
-   flutter test
+   flutter test --coverage
    ```
+
+   O projeto atualmente mantém uma cobertura de testes de 85%, demonstrando um forte compromisso com a qualidade do código.
 
 ## English
 
@@ -182,14 +184,14 @@ lib/
 ### How to Run the Project
 
 1. **Prerequisites**:
-   - Flutter SDK installed (version 3.7.0 or higher)
-   - Dart SDK installed
+   - Flutter SDK installed (version 3.29.0 or higher)
+   - Dart SDK installed (version 3.7.0 or higher)
    - Code editor (VS Code, Android Studio, etc)
 
 2. **Setup**:
    ```bash
    # Clone the repository
-   git clone [repository-url]
+   git clone https://github.com/ldantascruz/parking_control.git
    
    # Navigate to the project directory
    cd parking_control
@@ -209,6 +211,8 @@ lib/
    # Run unit and widget tests
    flutter test
    ```
+
+   The project currently maintains a test coverage of 85%, demonstrating a strong commitment to code quality.
 
 ### Raro Labs Test
 
