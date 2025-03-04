@@ -125,19 +125,21 @@ class HomeScreen extends StatelessWidget {
       if (vehicle != null) {
         showAdaptiveDialog(
           context: context,
-          builder: (dialogContext) => ChangeNotifierProvider<ParkingViewModel>.value(
-            value: viewModel,
-            child: VehicleExitDialog(vehicle: vehicle),
-          ),
+          builder:
+              (dialogContext) => ChangeNotifierProvider<ParkingViewModel>.value(
+                value: viewModel,
+                child: VehicleExitDialog(vehicle: vehicle),
+              ),
         );
       }
     } else {
       showAdaptiveDialog(
         context: context,
-        builder: (dialogContext) => ChangeNotifierProvider<ParkingViewModel>.value(
-          value: viewModel,
-          child: VehicleEntryDialog(preSelectedSpot: spot.number),
-        ),
+        builder:
+            (dialogContext) => ChangeNotifierProvider<ParkingViewModel>.value(
+              value: viewModel,
+              child: VehicleEntryDialog(preSelectedSpot: spot.number),
+            ),
       );
     }
   }
@@ -146,10 +148,11 @@ class HomeScreen extends StatelessWidget {
     final viewModel = Provider.of<ParkingViewModel>(context, listen: false);
     showAdaptiveDialog(
       context: context,
-      builder: (dialogContext) => ChangeNotifierProvider<ParkingViewModel>.value(
-        value: viewModel,
-        child: const VehicleHistoryDialog(),
-      ),
+      builder:
+          (dialogContext) => ChangeNotifierProvider<ParkingViewModel>.value(
+            value: viewModel,
+            child: const VehicleHistoryDialog(),
+          ),
     );
   }
 
@@ -157,10 +160,11 @@ class HomeScreen extends StatelessWidget {
     final viewModel = Provider.of<ParkingViewModel>(context, listen: false);
     showAdaptiveDialog(
       context: context,
-      builder: (dialogContext) => ChangeNotifierProvider<ParkingViewModel>.value(
-        value: viewModel,
-        child: const ClearRecordsDialog(),
-      ),
+      builder:
+          (dialogContext) => ChangeNotifierProvider<ParkingViewModel>.value(
+            value: viewModel,
+            child: const ClearRecordsDialog(),
+          ),
     );
   }
 }

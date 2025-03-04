@@ -20,10 +20,11 @@ void main() {
 
     // Mock the availableParkingSpots property to return a list with the test spot
     when(mockViewModel.availableParkingSpots).thenReturn([testSpot]);
-    
+
     // Add mock for registerVehicleEntry method
-    when(mockViewModel.registerVehicleEntry(any, any, any, any))
-        .thenAnswer((_) async => true);
+    when(
+      mockViewModel.registerVehicleEntry(any, any, any, any),
+    ).thenAnswer((_) async => true);
   });
 
   Widget buildTestWidget() {
@@ -31,9 +32,10 @@ void main() {
       home: ChangeNotifierProvider<ParkingViewModel>.value(
         value: mockViewModel,
         child: Builder(
-          builder: (context) => Dialog(
-            child: VehicleEntryDialog(preSelectedSpot: testSpot.number),
-          ),
+          builder:
+              (context) => Dialog(
+                child: VehicleEntryDialog(preSelectedSpot: testSpot.number),
+              ),
         ),
       ),
     );

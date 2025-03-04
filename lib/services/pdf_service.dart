@@ -216,7 +216,9 @@ class PdfService {
     final pdf = pw.Document();
     final font = await rootBundle.load('assets/fonts/Poppins-Regular.ttf');
     final fontBold = await rootBundle.load('assets/fonts/Poppins-Bold.ttf');
-    final fontSemiBold = await rootBundle.load('assets/fonts/Poppins-SemiBold.ttf');
+    final fontSemiBold = await rootBundle.load(
+      'assets/fonts/Poppins-SemiBold.ttf',
+    );
     final ttf = pw.Font.ttf(font);
     final ttfBold = pw.Font.ttf(fontBold);
     final ttfSemiBold = pw.Font.ttf(fontSemiBold);
@@ -224,12 +226,13 @@ class PdfService {
     pdf.addPage(
       pw.MultiPage(
         pageFormat: PdfPageFormat.a4,
-        build: (pw.Context context) => [
-          _buildDailyHeader(ttfBold),
-          _buildVehicleTable(vehicles, ttf, ttfSemiBold),
-          pw.SizedBox(height: 20),
-          _buildSummary(vehicles, ttf, ttfSemiBold),
-        ],
+        build:
+            (pw.Context context) => [
+              _buildDailyHeader(ttfBold),
+              _buildVehicleTable(vehicles, ttf, ttfSemiBold),
+              pw.SizedBox(height: 20),
+              _buildSummary(vehicles, ttf, ttfSemiBold),
+            ],
         footer: (context) => _buildFooter(context, ttf),
       ),
     );
@@ -271,7 +274,7 @@ class PdfService {
       final directory = Directory.systemTemp;
       filePath = '${directory.path}/$fileName.pdf';
     }
-    
+
     final file = File(filePath);
     await file.writeAsBytes(pdfData);
     return filePath;

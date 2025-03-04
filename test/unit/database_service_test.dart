@@ -226,14 +226,20 @@ void main() {
       // Arrange
       when(() => mockDatabase.execute(any())).thenAnswer((_) async {});
       when(() => mockDatabase.insert(any(), any())).thenAnswer((_) async => 1);
-      when(() => databaseService.database).thenAnswer((_) async => mockDatabase);
+      when(
+        () => databaseService.database,
+      ).thenAnswer((_) async => mockDatabase);
 
       // Act
       await databaseService.database;
 
       // Assert
-      verifyNever(() => mockDatabase.execute(any())); // Should not be called since it throws exception
-      verifyNever(() => mockDatabase.insert('parking_spots', any())); // Should not be called since execute throws exception
+      verifyNever(
+        () => mockDatabase.execute(any()),
+      ); // Should not be called since it throws exception
+      verifyNever(
+        () => mockDatabase.insert('parking_spots', any()),
+      ); // Should not be called since execute throws exception
     });
 
     test('database singleton returns same instance', () {
@@ -255,8 +261,9 @@ void main() {
       );
 
       final mockDbService = MockDatabaseService();
-      when(() => mockDbService.addVehicle(any()))
-          .thenThrow(Exception('Failed to add vehicle'));
+      when(
+        () => mockDbService.addVehicle(any()),
+      ).thenThrow(Exception('Failed to add vehicle'));
 
       // Act & Assert
       expect(
@@ -265,24 +272,30 @@ void main() {
       );
     });
 
-    test('getActiveVehicles returns empty list when no active vehicles', () async {
-      // Arrange
-      final mockDbService = MockDatabaseService();
-      when(() => mockDbService.getActiveVehicles()).thenAnswer((_) async => []);
+    test(
+      'getActiveVehicles returns empty list when no active vehicles',
+      () async {
+        // Arrange
+        final mockDbService = MockDatabaseService();
+        when(
+          () => mockDbService.getActiveVehicles(),
+        ).thenAnswer((_) async => []);
 
-      // Act
-      final result = await mockDbService.getActiveVehicles();
+        // Act
+        final result = await mockDbService.getActiveVehicles();
 
-      // Assert
-      expect(result, isEmpty);
-      verify(() => mockDbService.getActiveVehicles()).called(1);
-    });
+        // Assert
+        expect(result, isEmpty);
+        verify(() => mockDbService.getActiveVehicles()).called(1);
+      },
+    );
 
     test('getAllParkingSpots handles database error', () async {
       // Arrange
       final mockDbService = MockDatabaseService();
-      when(() => mockDbService.getAllParkingSpots())
-          .thenThrow(Exception('Database error'));
+      when(
+        () => mockDbService.getAllParkingSpots(),
+      ).thenThrow(Exception('Database error'));
 
       // Act & Assert
       expect(
@@ -296,8 +309,9 @@ void main() {
       final vehicleId = 'test-id';
       final exitTime = DateTime.now();
       final mockDbService = MockDatabaseService();
-      when(() => mockDbService.updateVehicleExit(any(), any()))
-          .thenThrow(Exception('Transaction failed'));
+      when(
+        () => mockDbService.updateVehicleExit(any(), any()),
+      ).thenThrow(Exception('Transaction failed'));
 
       // Act & Assert
       expect(
@@ -309,28 +323,25 @@ void main() {
     test('clearAllRecords handles transaction failure', () async {
       // Arrange
       final mockDbService = MockDatabaseService();
-      when(() => mockDbService.clearAllRecords())
-          .thenThrow(Exception('Failed to clear records'));
+      when(
+        () => mockDbService.clearAllRecords(),
+      ).thenThrow(Exception('Failed to clear records'));
 
       // Act & Assert
-      expect(
-        () => mockDbService.clearAllRecords(),
-        throwsA(isA<Exception>()),
-      );
+      expect(() => mockDbService.clearAllRecords(), throwsA(isA<Exception>()));
     });
 
     test('database initialization handles table creation failure', () async {
       // Arrange
-      when(() => mockDatabase.execute(any()))
-          .thenThrow(Exception('Failed to create table'));
-      when(() => databaseService.database)
-          .thenAnswer((_) async => Future.error(Exception('Failed to create table')));
+      when(
+        () => mockDatabase.execute(any()),
+      ).thenThrow(Exception('Failed to create table'));
+      when(() => databaseService.database).thenAnswer(
+        (_) async => Future.error(Exception('Failed to create table')),
+      );
 
       // Act & Assert
-      expect(
-        () => databaseService.database,
-        throwsA(isA<Exception>()),
-      );
+      expect(() => databaseService.database, throwsA(isA<Exception>()));
     });
 
     test('addVehicle handles invalid spot number', () async {
@@ -343,8 +354,9 @@ void main() {
       );
 
       final mockDbService = MockDatabaseService();
-      when(() => mockDbService.addVehicle(any()))
-          .thenThrow(Exception('Invalid parking spot number'));
+      when(
+        () => mockDbService.addVehicle(any()),
+      ).thenThrow(Exception('Invalid parking spot number'));
 
       // Act & Assert
       expect(

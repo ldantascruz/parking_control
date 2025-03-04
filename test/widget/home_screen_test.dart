@@ -18,35 +18,35 @@ void main() {
 
   setUp(() {
     mockViewModel = MockParkingViewModel();
-    
+
     // Create test data
     testParkingSpots = [
       ParkingSpot(number: 1, isOccupied: false),
       ParkingSpot(number: 2, isOccupied: true, currentVehicleId: 'test-id'),
       ParkingSpot(number: 3, isOccupied: false),
     ];
-    
+
     testVehicle = Vehicle(
       id: 'test-id',
       plate: 'ABC1234',
       entryTime: DateTime.now(),
       spotNumber: 2,
     );
-    
+
     // Setup default mock responses
     when(mockViewModel.parkingSpots).thenReturn(testParkingSpots);
     when(mockViewModel.isLoading).thenReturn(false);
     when(mockViewModel.errorMessage).thenReturn(null);
-    
+
     // Mock getVehicleBySpotNumber for all spots
     when(mockViewModel.getVehicleBySpotNumber(1)).thenReturn(null);
     when(mockViewModel.getVehicleBySpotNumber(2)).thenReturn(testVehicle);
     when(mockViewModel.getVehicleBySpotNumber(3)).thenReturn(null);
 
     // Mock availableParkingSpots for dialog tests
-    when(mockViewModel.availableParkingSpots).thenReturn(
-      testParkingSpots.where((spot) => !spot.isOccupied).toList(),
-    );
+    when(
+      mockViewModel.availableParkingSpots,
+    ).thenReturn(testParkingSpots.where((spot) => !spot.isOccupied).toList());
 
     // Mock vehicleHistory for dialog tests
     when(mockViewModel.vehicleHistory).thenReturn([]);
@@ -73,37 +73,40 @@ void main() {
 
     // Verify that the GridView is rendered
     expect(find.byType(GridView), findsOneWidget);
-    
+
     // Verify that parking spots are rendered
     expect(find.text('Vaga 1'), findsOneWidget);
     expect(find.text('Vaga 2'), findsOneWidget);
     expect(find.text('Vaga 3'), findsOneWidget);
-    
+
     // Verify that vehicle plate is displayed for occupied spot
     expect(find.text('ABC1234'), findsOneWidget);
-    
+
     // Verify that the bottom buttons are rendered
     expect(find.text('Histórico'), findsOneWidget);
     expect(find.text('Finalizar Dia'), findsOneWidget);
   });
 
-  testWidgets('HomeScreen should show loading indicator when isLoading is true',
-      (WidgetTester tester) async {
-    // Set loading state
-    when(mockViewModel.isLoading).thenReturn(true);
+  testWidgets(
+    'HomeScreen should show loading indicator when isLoading is true',
+    (WidgetTester tester) async {
+      // Set loading state
+      when(mockViewModel.isLoading).thenReturn(true);
 
-    // Build our app and trigger a frame
-    await tester.pumpWidget(buildTestWidget());
+      // Build our app and trigger a frame
+      await tester.pumpWidget(buildTestWidget());
 
-    // Verify that loading indicator is shown
-    expect(find.byType(CircularProgressIndicator), findsOneWidget);
+      // Verify that loading indicator is shown
+      expect(find.byType(CircularProgressIndicator), findsOneWidget);
 
-    // Verify that GridView is not shown while loading
-    expect(find.byType(GridView), findsNothing);
-  });
+      // Verify that GridView is not shown while loading
+      expect(find.byType(GridView), findsNothing);
+    },
+  );
 
-  testWidgets('HomeScreen should show error message when there is an error',
-      (WidgetTester tester) async {
+  testWidgets('HomeScreen should show error message when there is an error', (
+    WidgetTester tester,
+  ) async {
     // Set error state
     when(mockViewModel.errorMessage).thenReturn('Test error message');
 
@@ -117,8 +120,9 @@ void main() {
     expect(find.byType(GridView), findsNothing);
   });
 
-  testWidgets('should show vehicle entry dialog when tapping empty spot',
-      (WidgetTester tester) async {
+  testWidgets('should show vehicle entry dialog when tapping empty spot', (
+    WidgetTester tester,
+  ) async {
     // Build our app and trigger a frame
     await tester.pumpWidget(buildTestWidget());
 
@@ -130,8 +134,9 @@ void main() {
     expect(find.text('Registrar Entrada'), findsOneWidget);
   });
 
-  testWidgets('should show vehicle exit dialog when tapping occupied spot',
-      (WidgetTester tester) async {
+  testWidgets('should show vehicle exit dialog when tapping occupied spot', (
+    WidgetTester tester,
+  ) async {
     // Build our app and trigger a frame
     await tester.pumpWidget(buildTestWidget());
 
@@ -143,21 +148,24 @@ void main() {
     expect(find.text('Registrar Saída'), findsOneWidget);
   });
 
-  testWidgets('should show vehicle history dialog when tapping history button',
-      (WidgetTester tester) async {
-    // Build our app and trigger a frame
-    await tester.pumpWidget(buildTestWidget());
+  testWidgets(
+    'should show vehicle history dialog when tapping history button',
+    (WidgetTester tester) async {
+      // Build our app and trigger a frame
+      await tester.pumpWidget(buildTestWidget());
 
-    // Find and tap the history button
-    await tester.tap(find.text('Histórico'));
-    await tester.pumpAndSettle();
+      // Find and tap the history button
+      await tester.tap(find.text('Histórico'));
+      await tester.pumpAndSettle();
 
-    // Verify that the vehicle history dialog is shown
-    expect(find.text('Histórico de Veículos'), findsOneWidget);
-  });
+      // Verify that the vehicle history dialog is shown
+      expect(find.text('Histórico de Veículos'), findsOneWidget);
+    },
+  );
 
-  testWidgets('should show clear records dialog when tapping end day button',
-      (WidgetTester tester) async {
+  testWidgets('should show clear records dialog when tapping end day button', (
+    WidgetTester tester,
+  ) async {
     // Build our app and trigger a frame
     await tester.pumpWidget(buildTestWidget());
 

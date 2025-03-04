@@ -36,7 +36,8 @@ class Vehicle {
       description: map['description'],
       driver: map['driver'],
       entryTime: DateTime.parse(map['entry_time']),
-      exitTime: map['exit_time'] != null ? DateTime.parse(map['exit_time']) : null,
+      exitTime:
+          map['exit_time'] != null ? DateTime.parse(map['exit_time']) : null,
       spotNumber: map['spot_number'],
     );
   }

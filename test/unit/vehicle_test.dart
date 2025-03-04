@@ -10,7 +10,7 @@ void main() {
         entryTime: entryTime,
         spotNumber: 1,
       );
-      
+
       expect(vehicle.id, isNull);
       expect(vehicle.plate, equals('ABC123'));
       expect(vehicle.description, isNull);
@@ -32,7 +32,7 @@ void main() {
         exitTime: exitTime,
         spotNumber: 1,
       );
-      
+
       expect(vehicle.id, equals('vehicle-123'));
       expect(vehicle.plate, equals('ABC123'));
       expect(vehicle.description, equals('Red Car'));
@@ -54,9 +54,9 @@ void main() {
         exitTime: exitTime,
         spotNumber: 1,
       );
-      
+
       final map = vehicle.toMap();
-      
+
       expect(map['id'], equals('vehicle-123'));
       expect(map['plate'], equals('ABC123'));
       expect(map['description'], equals('Red Car'));
@@ -73,9 +73,9 @@ void main() {
         entryTime: entryTime,
         spotNumber: 1,
       );
-      
+
       final map = vehicle.toMap();
-      
+
       expect(map['id'], isNull);
       expect(map['plate'], equals('ABC123'));
       expect(map['description'], isNull);
@@ -97,15 +97,21 @@ void main() {
         'exit_time': exitTime.toIso8601String(),
         'spot_number': 1,
       };
-      
+
       final vehicle = Vehicle.fromMap(map);
-      
+
       expect(vehicle.id, equals('vehicle-123'));
       expect(vehicle.plate, equals('ABC123'));
       expect(vehicle.description, equals('Red Car'));
       expect(vehicle.driver, equals('John Doe'));
-      expect(vehicle.entryTime.toIso8601String(), equals(entryTime.toIso8601String()));
-      expect(vehicle.exitTime?.toIso8601String(), equals(exitTime.toIso8601String()));
+      expect(
+        vehicle.entryTime.toIso8601String(),
+        equals(entryTime.toIso8601String()),
+      );
+      expect(
+        vehicle.exitTime?.toIso8601String(),
+        equals(exitTime.toIso8601String()),
+      );
       expect(vehicle.spotNumber, equals(1));
     });
 
@@ -120,14 +126,17 @@ void main() {
         'exit_time': null,
         'spot_number': 1,
       };
-      
+
       final vehicle = Vehicle.fromMap(map);
-      
+
       expect(vehicle.id, isNull);
       expect(vehicle.plate, equals('ABC123'));
       expect(vehicle.description, isNull);
       expect(vehicle.driver, isNull);
-      expect(vehicle.entryTime.toIso8601String(), equals(entryTime.toIso8601String()));
+      expect(
+        vehicle.entryTime.toIso8601String(),
+        equals(entryTime.toIso8601String()),
+      );
       expect(vehicle.exitTime, isNull);
       expect(vehicle.spotNumber, equals(1));
     });
@@ -142,7 +151,7 @@ void main() {
         entryTime: entryTime,
         spotNumber: 1,
       );
-      
+
       final newExitTime = entryTime.add(Duration(hours: 2));
       final updated = original.copyWith(
         plate: 'XYZ789',
@@ -151,7 +160,7 @@ void main() {
         exitTime: newExitTime,
         spotNumber: 2,
       );
-      
+
       expect(updated.id, equals('vehicle-123')); // Unchanged
       expect(updated.plate, equals('XYZ789'));
       expect(updated.description, equals('Blue Car'));
@@ -173,9 +182,9 @@ void main() {
         exitTime: exitTime,
         spotNumber: 1,
       );
-      
+
       final updated = original.copyWith();
-      
+
       expect(updated.id, equals(original.id));
       expect(updated.plate, equals(original.plate));
       expect(updated.description, equals(original.description));

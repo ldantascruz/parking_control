@@ -21,11 +21,7 @@ class DatabaseService {
 
   Future<Database> _initDatabase() async {
     String path = join(await getDatabasesPath(), 'parking_control.db');
-    return await openDatabase(
-      path,
-      version: 1,
-      onCreate: _createDb,
-    );
+    return await openDatabase(path, version: 1, onCreate: _createDb);
   }
 
   Future<void> _createDb(Database db, int version) async {
@@ -89,10 +85,7 @@ class DatabaseService {
       await txn.insert('vehicles', vehicle.toMap());
       await txn.update(
         'parking_spots',
-        {
-          'is_occupied': 1,
-          'current_vehicle_id': vehicle.id,
-        },
+        {'is_occupied': 1, 'current_vehicle_id': vehicle.id},
         where: 'number = ?',
         whereArgs: [vehicle.spotNumber],
       );
@@ -117,10 +110,7 @@ class DatabaseService {
         );
         await txn.update(
           'parking_spots',
-          {
-            'is_occupied': 0,
-            'current_vehicle_id': null,
-          },
+          {'is_occupied': 0, 'current_vehicle_id': null},
           where: 'number = ?',
           whereArgs: [spotNumber],
         );
@@ -133,15 +123,12 @@ class DatabaseService {
     await db.transaction((txn) async {
       // Delete all vehicle records
       await txn.delete('vehicles');
-      
+
       // Reset all parking spots to unoccupied
-      await txn.update(
-        'parking_spots',
-        {
-          'is_occupied': 0,
-          'current_vehicle_id': null,
-        },
-      );
+      await txn.update('parking_spots', {
+        'is_occupied': 0,
+        'current_vehicle_id': null,
+      });
     });
   }
 }

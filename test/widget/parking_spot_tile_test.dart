@@ -103,7 +103,7 @@ void main() {
   ) async {
     // Track if onTap was called
     bool onTapCalled = false;
-    
+
     // Build widget with custom onTap handler
     await tester.pumpWidget(
       MaterialApp(
@@ -124,7 +124,7 @@ void main() {
 
     // Tap on the parking spot tile
     await tester.tap(find.byType(ParkingSpotTile));
-    
+
     // Verify that onTap was called
     expect(onTapCalled, true);
   });
@@ -205,10 +205,7 @@ void main() {
 
     // Verify semantic labels
     final semantics = tester.getSemantics(find.byType(ParkingSpotTile));
-    expect(
-      semantics.label,
-      contains('Vaga 1'),
-    );
+    expect(semantics.label, contains('Vaga 1'));
   });
 
   testWidgets('ParkingSpotTile handles null vehicle data gracefully', (
@@ -239,6 +236,9 @@ void main() {
 
     // Verify widget renders without errors
     expect(find.text('Vaga 3'), findsOneWidget);
-    expect(find.byType(Text), findsOneWidget); // Only spot number should be visible
+    expect(
+      find.byType(Text),
+      findsOneWidget,
+    ); // Only spot number should be visible
   });
 }

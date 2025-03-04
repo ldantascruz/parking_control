@@ -23,8 +23,10 @@ class ParkingViewModel extends ChangeNotifier {
   String? get errorMessage => _errorMessage;
 
   // Constructor
-  ParkingViewModel({DatabaseService? databaseService, bool initializeData = true})
-    : _databaseService = databaseService ?? DatabaseService() {
+  ParkingViewModel({
+    DatabaseService? databaseService,
+    bool initializeData = true,
+  }) : _databaseService = databaseService ?? DatabaseService() {
     if (initializeData) {
       _initData();
     }
