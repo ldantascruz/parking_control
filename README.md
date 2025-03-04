@@ -1,5 +1,7 @@
 # Parking Control - Controle de Estacionamento
 
+[![Flutter CI](https://github.com/ldantascruz/parking_control/actions/workflows/flutter_ci.yml/badge.svg)](https://github.com/ldantascruz/parking_control/actions/workflows/flutter_ci.yml)
+
 ## Português
 
 ### Sobre o Projeto
