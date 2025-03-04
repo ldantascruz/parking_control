@@ -20,26 +20,48 @@ void main() {
 
     // Mock the availableParkingSpots property to return a list with the test spot
     when(mockViewModel.availableParkingSpots).thenReturn([testSpot]);
-
+    
     // Add mock for registerVehicleEntry method
-    when(
-      mockViewModel.registerVehicleEntry(any, any, any, any),
-    ).thenAnswer((_) async => true);
+    when(mockViewModel.registerVehicleEntry(any, any, any, any))
+        .thenAnswer((_) async => true);
   });
 
   Widget buildTestWidget() {
     return MaterialApp(
-      home: ChangeNotifierProvider<ParkingViewModel>.value(
-        value: mockViewModel,
-        child: Builder(
-          builder:
-              (context) => Dialog(
-                child: VehicleEntryDialog(preSelectedSpot: testSpot.number),
-              ),
+      home: Scaffold(
+        body: ChangeNotifierProvider<ParkingViewModel>.value(
+          value: mockViewModel,
+          child: Builder(
+            builder: (context) => Dialog(
+              child: VehicleEntryDialog(preSelectedSpot: testSpot.number),
+            ),
+          ),
         ),
       ),
     );
   }
+
+  testWidgets('VehicleEntryDialog should handle registration failure',
+      (WidgetTester tester) async {
+    // Mock registration failure
+    when(mockViewModel.registerVehicleEntry(any, any, any, any))
+        .thenAnswer((_) async => false);
+
+    await tester.pumpWidget(buildTestWidget());
+
+    // Fill in required fields
+    await tester.enterText(
+        find.widgetWithText(TextFormField, 'Placa do Veículo'), 'ABC-1234');
+    await tester.enterText(
+        find.widgetWithText(TextFormField, 'Nome do Motorista'), 'Test Driver');
+
+    // Tap confirm button
+    await tester.tap(find.text('Confirmar'));
+    await tester.pumpAndSettle();
+
+    // Verify error message is displayed
+    expect(find.text('Erro ao registrar entrada'), findsOneWidget);
+  });
 
   testWidgets('VehicleEntryDialog should render correctly', (
     WidgetTester tester,

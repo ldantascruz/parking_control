@@ -638,9 +638,14 @@ DA:272,1
 DA:273,1
 DA:274,1
 DA:275,1
-DA:278,2
-LF:118
-LH:116
+DA:278,1
+DA:279,2
+DA:282,1
+DA:283,1
+DA:284,1
+DA:285,3
+LF:123
+LH:121
 end_of_record
 SF:lib/widgets/vehicle_exit_dialog.dart
 DA:12,2
