@@ -202,7 +202,10 @@ class _VehicleEntryDialogState extends State<VehicleEntryDialog> {
                     child: Text(
                       'Cancelar',
                       style: GoogleFonts.poppins(
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        color:
+                            Theme.of(
+                              context,
+                            ).colorScheme.surfaceContainerHighest,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -232,7 +235,7 @@ class _VehicleEntryDialogState extends State<VehicleEntryDialog> {
   }) {
     return Container(
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surfaceVariant,
+        color: Theme.of(context).colorScheme.surfaceContainerHighest,
         borderRadius: BorderRadius.circular(12),
       ),
       padding: EdgeInsets.all(16),
@@ -272,7 +275,15 @@ class _VehicleEntryDialogState extends State<VehicleEntryDialog> {
         spotNumber,
       );
       if (success) {
-        Navigator.pop(context);
+        if (mounted) {
+          Navigator.pop(context);
+        }
+      } else {
+        if (mounted) {
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text('Erro ao registrar entrada')));
+        }
       }
     }
   }

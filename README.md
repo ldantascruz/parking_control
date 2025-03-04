@@ -105,7 +105,7 @@ lib/
    flutter test --coverage
    ```
 
-   O projeto atualmente mantém uma cobertura de testes de 85%, demonstrando um forte compromisso com a qualidade do código.
+   O projeto atualmente mantém uma cobertura de testes de 85,4%, demonstrando um forte compromisso com a qualidade do código.
 
 ## English
 
@@ -212,7 +212,7 @@ lib/
    flutter test
    ```
 
-   The project currently maintains a test coverage of 85%, demonstrating a strong commitment to code quality.
+   The project currently maintains a test coverage of 85.4%, demonstrating a strong commitment to code quality.
 
 ### Raro Labs Test
 

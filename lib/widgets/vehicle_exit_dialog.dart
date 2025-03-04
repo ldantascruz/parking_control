@@ -104,7 +104,7 @@ class _VehicleExitDialogState extends State<VehicleExitDialog> {
               widget.vehicle.id!,
             );
             if (success) {
-              if (mounted) {
+              if (context.mounted) {
                 Navigator.pop(context);
               }
             } else {
