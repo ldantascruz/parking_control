@@ -64,12 +64,12 @@ class AppThemes {
       titleMedium: GoogleFonts.poppins(color: AppColors.text),
       titleSmall: GoogleFonts.poppins(color: AppColors.textLight),
     ),
-    cardTheme: CardTheme(
+    cardTheme: CardThemeData(
       color: Colors.white,
       elevation: 2,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
     ),
-    dialogTheme: DialogTheme(
+    dialogTheme: DialogThemeData(
       backgroundColor: Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
     ),
@@ -130,12 +130,12 @@ class AppThemes {
       titleMedium: GoogleFonts.poppins(color: AppColors.darkText),
       titleSmall: GoogleFonts.poppins(color: AppColors.darkTextLight),
     ),
-    cardTheme: CardTheme(
+    cardTheme: CardThemeData(
       color: AppColors.darkSurface,
       elevation: 2,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
     ),
-    dialogTheme: DialogTheme(
+    dialogTheme: DialogThemeData(
       backgroundColor: AppColors.darkSurface,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
     ),
